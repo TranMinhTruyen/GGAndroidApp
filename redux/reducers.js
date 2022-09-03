@@ -13,5 +13,4 @@ export const tokenSlice = createSlice({
         },
     },
 });
-
 export const { setToken } = tokenSlice.actions
