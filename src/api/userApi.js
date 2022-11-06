@@ -7,7 +7,7 @@ const userApi = {
             account: username,
             password: pass,
             deviceInfo: {
-                deviceName: 'test',
+                deviceName: 'test1',
                 os: 'ANDROID',
             },
         };
