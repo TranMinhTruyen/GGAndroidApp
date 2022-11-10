@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Image, KeyboardAvoidingView, StyleSheet, Text} from 'react-native';
 import {
-  Center,
+  Center, Checkbox,
   Column,
   FormControl,
   IconButton,
@@ -21,6 +21,7 @@ const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(false);
   const [checkUsernameInvalid, setUserNameInvalid] = useState(false);
   const [checkPasswordInvalid, setPasswordInvalid] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -41,40 +42,25 @@ const Login = ({navigation}) => {
   async function loginOnPressHandler() {
     if (username !== '' && password !== '') {
       setAction(true);
+      console.log(remember)
       try {
-        let result = await userApi.login(username, password);
-        if (
-          result.status === 200 &&
-          result.payload !== null &&
-          result.payload != ''
-        ) {
+        let result = await userApi.login(username, password, remember);
+        if (result.status === 200 && result.payload !== null && result.payload !== '') {
           setAction(false);
           dispatch(setToken(result.payload.accessToken));
         } else {
           setAction(false);
-          Toast.show({
-            title: 'Error',
-            status: 'error',
-            description: 'Username or Password is wrong!',
-          });
+          Toast.show({title: 'Error', status: 'error', description: 'Username or Password is wrong!',});
         }
       } catch (error) {
         setAction(false);
-        Toast.show({
-          title: 'Error',
-          status: 'error',
-          description: error.toString(),
-        });
+        Toast.show({title: 'Error', status: 'error', description: error.toString(),});
         console.log(error);
       }
     } else {
       setUserNameInvalid(true);
       setPasswordInvalid(true);
-      Toast.show({
-        title: 'Warning',
-        status: 'warning',
-        description: 'You must input username and password!',
-      });
+      Toast.show({title: 'Warning', status: 'warning', description: 'You must input username and password!',});
     }
   }
 
@@ -163,7 +149,7 @@ const Login = ({navigation}) => {
               fontWeight={'bold'}
               onChangeText={value => {
                 setPassword(value);
-                setUserNameInvalid(false);
+                setPasswordInvalid(false);
               }}
               onEndEditing={e => {
                 if (e.nativeEvent.text !== '') {
@@ -179,6 +165,13 @@ const Login = ({navigation}) => {
             </FormControl.ErrorMessage>
           </FormControl>
           <Center>
+            <Row style={{alignSelf: "flex-end", marginEnd: 30}}>
+              <Checkbox
+                  colorScheme="red"
+                  onChange={(isSelected) => {setRemember(isSelected)}}>
+                Remember me
+              </Checkbox>
+            </Row>
             <Row>
               <CustomButton
                 buttonStyle={GlobalStyles.button}
