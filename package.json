@@ -9,6 +9,7 @@
     "test": "jest",
     "lint": "eslint .",
     "reverse": "adb -s RF8RC0779GW reverse tcp:8080 tcp:8080",
+    "reverse2": "adb -s emulator-5554 reverse tcp:8080 tcp:8080",
     "devices": "adb devices"
   },
   "dependencies": {
