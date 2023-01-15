@@ -15,7 +15,7 @@ import CustomButton from "../component/CustomButton";
 import GlobalStyles from "../styles/GlobalStyles";
 import userApi from '../api/userApi';
 import {useDispatch} from 'react-redux';
-import {setToken} from '../../redux/reducers';
+import {setToken} from '../redux/reducers';
 import LoginConfirmModal from "../component/LoginConfirmModal";
 
 const Login = ({navigation}) => {
@@ -47,15 +47,15 @@ const Login = ({navigation}) => {
             let result = await userApi.login(username, password, remember);
 
             switch (result.status) {
-                case 200:
-                    if (result.payload !== null && result.payload !== '') {
-                        setAction(false);
-                        dispatch(setToken(result.payload.accessToken));
-                    }
-                    break;
-                case 401:
+            case 200:
+                if (result.payload !== null && result.payload !== '') {
                     setAction(false);
-                    setModalVisible(true);
+                    dispatch(setToken(result.payload.accessToken));
+                }
+                break;
+            case 401:
+                setAction(false);
+                setModalVisible(true);
             }
         } else {
             setUserNameInvalid(true);
