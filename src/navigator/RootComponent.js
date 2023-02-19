@@ -4,7 +4,7 @@ import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 
 const RootComponent = () => {
-    const userToken = useSelector(state => state.token.token);
+    const userToken = useSelector(state => state.token.accessToken);
     return (
         userToken == null ? <AuthStack/> : <MainStack/>
     );

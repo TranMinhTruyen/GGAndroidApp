@@ -50,7 +50,7 @@ const Login = ({navigation}) => {
             case 200:
                 if (result.payload !== null && result.payload !== '') {
                     setAction(false);
-                    dispatch(setToken(result.payload.accessToken));
+                    dispatch(setToken(result.payload));
                 }
                 break;
             case 401:

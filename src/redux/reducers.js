@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    token: null,
+    accessToken: null,
+    role: null,
+    authorities: [],
 }
 
 export const tokenSlice = createSlice({
@@ -9,7 +11,9 @@ export const tokenSlice = createSlice({
     initialState,
     reducers: {
         setToken: (state, action) => {
-            state.token = action.payload
+            state.accessToken = action.payload.accessToken
+            state.role = action.payload.role
+            state.authorities = action.payload.authorities
         },
     },
 });
